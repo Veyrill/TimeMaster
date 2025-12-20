@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Time Tracker MVP</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+<div class="app">
+  <h1>⏱ Time Tracker</h1>
+
+  <!-- KATEGORIA -->
+  <select id="category">
+    <option value="">Bez kategorii</option>
+    <option value="Praca">Praca</option>
+    <option value="Nauka">Nauka</option>
+    <option value="Hobby">Hobby</option>
+  </select>
+
+  <!-- WŁASNA KATEGORIA -->
+  <input id="customCategory" placeholder="Własna kategoria (opcjonalnie)" />
+
+  <!-- NAZWA AKTYWNOŚCI -->
+  <input id="activity" placeholder="Nazwa aktywności" />
+
+  <!-- ⭐ PRIORYTET -->
+  <select id="priority">
+    <option value="low">🟢 Niski priorytet</option>
+    <option value="medium">🟡 Średni priorytet</option>
+    <option value="high">🔴 Wysoki priorytet</option>
+  </select>
+
+  <!-- PRZYCISKI -->
+  <div class="buttons">
+    <button id="start">Start</button>
+    <button id="pause" disabled>Pauza</button>
+    <button id="stop" disabled>Stop</button>
+  </div>
+
+  <!-- TIMER -->
+  <h2 id="timer">00:00:00</h2>
+
+  <!-- PODSUMOWANIE -->
+  <p id="summary">Łączny czas: 00:00:00</p>
+
+  <button id="resetDay" style="margin-top: 10px;">
+    🔄 Reset dnia
+  </button>
+
+  <!-- HISTORIA -->
+  <h3>Historia</h3>
+
+  <select id="filterCategory">
+    <option value="">Wszystkie kategorie</option>
+  </select>
+
+  <ul id="history"></ul>
+
+  <!-- RAPORT -->
+  <h3>Podsumowanie wg kategorii</h3>
+  <ul id="categorySummary"></ul>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
