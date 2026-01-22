@@ -1,65 +1,80 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <title>Time Tracker MVP</title>
-  <link rel="stylesheet" href="/static/style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeMaster Pro</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="app">
-  <h1>⏱ Time Tracker</h1>
+<div class="container">
+    <header>
+        <h1>⏱ TimeMaster <span class="badge">PRO</span></h1>
+    </header>
 
-  <!-- KATEGORIA -->
-  <select id="category">
-    <option value="">Bez kategorii</option>
-    <option value="Praca">Praca</option>
-    <option value="Nauka">Nauka</option>
-    <option value="Hobby">Hobby</option>
-  </select>
+    <section class="timer-card">
+        <div id="timer">00:00:00</div>
+        
+        <div class="input-grid">
+            <div class="input-group">
+                <label>Co robisz?</label>
+                <input id="activity" placeholder="Np. Kodowanie projektu..." />
+            </div>
+            
+            <div class="input-group">
+                <label>Kategoria</label>
+                <div class="category-wrapper">
+                    <select id="category">
+                        <option value="">Wybierz...</option>
+                        <option value="Praca">Praca</option>
+                        <option value="Nauka">Nauka</option>
+                        <option value="Hobby">Hobby</option>
+                    </select>
+                    <input id="customCategory" placeholder="Własna..." />
+                </div>
+            </div>
 
-  <!-- WŁASNA KATEGORIA -->
-  <input id="customCategory" placeholder="Własna kategoria (opcjonalnie)" />
+            <div class="input-group">
+                <label>Priorytet</label>
+                <select id="priority">
+                    <option value="low">🟢 Niski</option>
+                    <option value="medium" selected>🟡 Średni</option>
+                    <option value="high">🔴 Wysoki</option>
+                </select>
+            </div>
+        </div>
 
-  <!-- NAZWA AKTYWNOŚCI -->
-  <input id="activity" placeholder="Nazwa aktywności" />
+        <div class="controls">
+            <button id="start" class="btn-primary">Start</button>
+            <button id="pause" class="btn-secondary" disabled>Pauza</button>
+            <button id="stop" class="btn-danger" disabled>Stop</button>
+        </div>
+    </section>
 
-  <!-- ⭐ PRIORYTET -->
-  <select id="priority">
-    <option value="low">🟢 Niski priorytet</option>
-    <option value="medium">🟡 Średni priorytet</option>
-    <option value="high">🔴 Wysoki priorytet</option>
-  </select>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <span class="stat-label">Dziś łącznie</span>
+            <div id="summary" class="stat-value">00:00:00</div>
+        </div>
+        <button id="resetDay" class="btn-ghost">🔄 Resetuj dzień</button>
+    </div>
 
-  <!-- PRZYCISKI -->
-  <div class="buttons">
-    <button id="start">Start</button>
-    <button id="pause" disabled>Pauza</button>
-    <button id="stop" disabled>Stop</button>
-  </div>
+    <section class="history-section">
+        <div class="section-header">
+            <h3>Historia</h3>
+            <select id="filterCategory" class="mini-select">
+                <option value="">Wszystkie kategorie</option>
+            </select>
+        </div>
+        <ul id="history" class="history-list"></ul>
+    </section>
 
-  <!-- TIMER -->
-  <h2 id="timer">00:00:00</h2>
-
-  <!-- PODSUMOWANIE -->
-  <p id="summary">Łączny czas: 00:00:00</p>
-
-  <button id="resetDay" style="margin-top: 10px;">
-    🔄 Reset dnia
-  </button>
-
-  <!-- HISTORIA -->
-  <h3>Historia</h3>
-
-  <select id="filterCategory">
-    <option value="">Wszystkie kategorie</option>
-  </select>
-
-  <ul id="history"></ul>
-
-  <!-- RAPORT -->
-  <h3>Podsumowanie wg kategorii</h3>
-  <ul id="categorySummary"></ul>
+    <section class="summary-section">
+        <h3>Podsumowanie wg kategorii</h3>
+        <ul id="categorySummary" class="category-chips"></ul>
+    </section>
 </div>
 
 <script src="/static/app.js"></script>
