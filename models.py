@@ -1,5 +1,5 @@
-from sqlalchemy import Column, Integer, String, DateTime, Boolean
-from datetime import datetime
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Date
+from datetime import datetime, date
 from database import Base
 
 class TimeEntry(Base):
@@ -10,6 +10,8 @@ class TimeEntry(Base):
     activity = Column(String, nullable=False)
     category = Column(String, nullable=True)
     priority = Column(String, default="medium")  # low | medium | high
+
+
 
     start_time = Column(DateTime, default=datetime.utcnow)
     end_time = Column(DateTime, nullable=True)

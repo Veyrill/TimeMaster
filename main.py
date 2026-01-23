@@ -7,6 +7,8 @@ from datetime import datetime
 from database import SessionLocal, engine
 from models import Base, TimeEntry
 from schemas import TimeEntryCreate, TimeEntryUpdate
+from urllib.parse import urlencode
+from fastapi import HTTPException
 
 Base.metadata.create_all(bind=engine)
 
@@ -127,3 +129,55 @@ def get_summary(db: Session = Depends(get_db)):
         for e in entries
     )
     return {"total_seconds": total}
+
+
+@app.get("/api/calendar/google/{entry_id}")
+def generate_google_calendar_link(entry_id: int, db: Session = Depends(get_db)):
+    entry = db.get(TimeEntry, entry_id)
+
+    if not entry:
+        return {"error": "Entry not found"}
+
+    # format dat pod Google Calendar
+    start = entry.start_time.strftime("%Y%m%dT%H%M%S")
+    end = (
+        entry.end_time.strftime("%Y%m%dT%H%M%S")
+        if entry.end_time
+        else start
+    )
+
+    params = {
+        "action": "TEMPLATE",
+        "text": entry.activity,
+        "dates": f"{start}/{end}",
+        "details": (
+            f"Kategoria: {entry.category or 'brak'}\n"
+            f"Priorytet: {entry.priority}\n"
+            f"Status: {entry.status}"
+        ),
+    }
+
+    url = "https://calendar.google.com/calendar/render?" + urlencode(params)
+
+    return {"url": url}
+
+from urllib.parse import urlencode
+
+@app.get("/api/calendar/google/{entry_id}")
+def google_calendar_link(entry_id: int, db: Session = Depends(get_db)):
+    entry = db.get(TimeEntry, entry_id)
+    if not entry or not entry.end_time:
+        return {"error": "Entry not finished"}
+
+    start = entry.start_time.strftime("%Y%m%dT%H%M%S")
+    end = entry.end_time.strftime("%Y%m%dT%H%M%S")
+
+    params = {
+        "action": "TEMPLATE",
+        "text": entry.activity,
+        "dates": f"{start}/{end}",
+        "details": f"Kategoria: {entry.category or 'Brak'} | Priorytet: {entry.priority}",
+    }
+
+    url = "https://calendar.google.com/calendar/render?" + urlencode(params)
+    return {"url": url}
